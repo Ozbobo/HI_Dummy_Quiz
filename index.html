@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#7c5cff" />
+<meta name="theme-color" content="#1e3a8a" />
 <title>Home Insurance Quiz</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -12,7 +12,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     min-height: 100vh;
     min-height: 100dvh;
-    background: linear-gradient(135deg, #a78bfa 0%, #f0abfc 50%, #fda4af 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #60a5fa 100%);
     background-attachment: fixed;
     color: #1f2937;
     -webkit-font-smoothing: antialiased;
@@ -22,34 +22,13 @@
     padding: 24px 16px 32px;
   }
 
-  .brand {
-    color: white;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.3px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
-  .brand .logo {
-    width: 28px; height: 28px;
-    background: white;
-    border-radius: 8px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-  }
-
   .card {
     width: 100%;
     max-width: 440px;
     background: rgba(255,255,255,0.96);
     backdrop-filter: blur(10px);
     border-radius: 24px;
-    box-shadow: 0 20px 50px -10px rgba(80, 30, 120, 0.35);
+    box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.25);
     padding: 28px 24px 32px;
     position: relative;
     overflow: hidden;
@@ -64,13 +43,13 @@
   .progress-bar {
     flex: 1;
     height: 8px;
-    background: #ede9fe;
+    background: #dbeafe;
     border-radius: 999px;
     overflow: hidden;
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7c5cff, #ec4899);
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
     border-radius: 999px;
     width: 0%;
     transition: width 0.4s cubic-bezier(.4,0,.2,1);
@@ -111,7 +90,7 @@
   }
   .field:focus {
     outline: none;
-    border-color: #7c5cff;
+    border-color: #2563eb;
     background: white;
   }
 
@@ -137,12 +116,12 @@
     transition: all 0.15s ease;
     -webkit-tap-highlight-color: transparent;
   }
-  .option-btn:hover { border-color: #c4b5fd; background: white; }
+  .option-btn:hover { border-color: #93c5fd; background: white; }
   .option-btn:active { transform: scale(0.98); }
   .option-btn.selected {
-    border-color: #7c5cff;
-    background: #f5f3ff;
-    color: #5b21b6;
+    border-color: #2563eb;
+    background: #eff6ff;
+    color: #1e40af;
   }
   .option-icon { font-size: 22px; }
 
@@ -176,9 +155,9 @@
   }
   .btn:active { transform: scale(0.97); }
   .btn-primary {
-    background: linear-gradient(135deg, #7c5cff 0%, #ec4899 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     color: white;
-    box-shadow: 0 8px 20px -6px rgba(124, 92, 255, 0.55);
+    box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.55);
   }
   .btn-primary:disabled {
     opacity: 0.4;
@@ -206,8 +185,8 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    border: 6px solid #ede9fe;
-    border-top-color: #7c5cff;
+    border: 6px solid #dbeafe;
+    border-top-color: #2563eb;
     animation: spin 0.9s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -246,12 +225,12 @@
   }
   .result .subtitle { margin-bottom: 22px; }
   .price-card {
-    background: linear-gradient(135deg, #7c5cff 0%, #ec4899 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     color: white;
     border-radius: 18px;
     padding: 24px 20px;
     margin-bottom: 22px;
-    box-shadow: 0 12px 30px -8px rgba(124, 92, 255, 0.5);
+    box-shadow: 0 12px 30px -8px rgba(37, 99, 235, 0.5);
   }
   .price-label {
     font-size: 13px;
@@ -317,11 +296,6 @@
 </style>
 </head>
 <body>
-  <div class="brand">
-    <span class="logo">🏡</span>
-    <span>HomeShield Insurance</span>
-  </div>
-
   <div class="card" id="card">
     <!-- Screens get rendered here -->
   </div>
@@ -567,7 +541,7 @@
   sizeCanvas();
   window.addEventListener('resize', sizeCanvas);
 
-  const colors = ['#7c5cff', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#f0abfc'];
+  const colors = ['#1e3a8a', '#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#ffffff'];
   let particles = [];
   let animating = false;
 
