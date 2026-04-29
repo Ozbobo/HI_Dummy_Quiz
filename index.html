@@ -5,13 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#ffffff" />
 <title>Compare Home Insurance Rates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --navy: #15254a;
+    --navy-soft: #1f3263;
+    --teal: #2db0a8;
+    --teal-dark: #228e87;
+    --green: #22c55e;
+    --grey-50: #fafafa;
+    --grey-100: #f3f4f6;
+    --grey-200: #e8e9ec;
+    --grey-300: #d6d9de;
+    --grey-500: #6b7280;
+    --grey-700: #374151;
+  }
+
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #222;
-    background: #ffffff;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--navy);
+    background: #fff;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     display: flex;
@@ -20,157 +37,191 @@
 
   /* ---------- Header ---------- */
   .site-header {
-    background: #fff;
-    padding: 18px 24px;
-    display: flex;
+    padding: 24px 32px 18px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #f0f0f0;
+    gap: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
   }
   .logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
+    color: var(--navy);
   }
-  .logo svg { width: 36px; height: 36px; flex-shrink: 0; }
+  .logo svg { width: 34px; height: 34px; flex-shrink: 0; }
   .logo-text {
-    font-size: 26px;
+    line-height: 1;
     font-weight: 800;
-    color: #111;
-    letter-spacing: -0.3px;
+    color: var(--navy);
   }
-  .logo-text .accent { color: #2196F3; }
+  .logo-text .top {
+    display: block;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+  .logo-text .bottom {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+
+  .header-progress {
+    position: relative;
+    padding: 18px 0 0;
+  }
+  .header-progress-track {
+    width: 100%;
+    height: 4px;
+    background: var(--grey-200);
+    border-radius: 999px;
+    overflow: visible;
+    position: relative;
+  }
+  .header-progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 999px;
+    transition: width 0.45s cubic-bezier(.4,0,.2,1);
+    position: relative;
+  }
+  .header-progress-bubble {
+    position: absolute;
+    top: -32px;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 14px;
+    transition: left 0.45s cubic-bezier(.4,0,.2,1);
+    white-space: nowrap;
+  }
+  .header-progress-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #111;
+  }
 
   .phone {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 8px;
-    color: #2196F3;
-    font-weight: 700;
-    font-size: 18px;
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 17px;
     text-decoration: none;
     white-space: nowrap;
   }
   .phone svg { width: 22px; height: 22px; }
 
-  /* ---------- Progress section ---------- */
-  .progress-section {
-    background: #f5f5f5;
-    padding: 18px 24px 22px;
-    border-bottom: 1px solid #ececec;
-  }
-  .progress-inner {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .progress-title {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin: 0 0 12px;
-  }
-  .progress-bar {
-    width: 100%;
-    height: 26px;
-    background: #e6e6e6;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-  }
-  .progress-fill {
-    height: 100%;
-    background: #22C55E;
-    border-radius: 4px;
-    transition: width 0.4s cubic-bezier(.4,0,.2,1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    min-width: 90px;
-    white-space: nowrap;
-  }
-
-  /* ---------- Main content ---------- */
+  /* ---------- Main ---------- */
   .main {
     flex: 1;
-    padding: 40px 24px 60px;
+    padding: 28px 24px 40px;
   }
   .main-inner {
     max-width: 900px;
     margin: 0 auto;
-  }
-  .question-title {
     text-align: center;
-    font-size: 32px;
-    font-weight: 400;
-    color: #222;
-    line-height: 1.25;
+  }
+  .pretitle {
+    font-size: 16px;
+    color: var(--navy);
+    font-weight: 500;
+    margin: 0 0 6px;
+  }
+  .pretitle strong { font-weight: 700; }
+
+  .question-title {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.15;
+    letter-spacing: -0.5px;
     margin: 0 0 36px;
   }
-  .question-title strong {
-    font-weight: 800;
-    color: #111;
-  }
 
+  /* Inputs */
   .field {
     display: block;
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    padding: 16px 18px;
+    padding: 18px 20px;
     font-size: 18px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
+    border: 1.5px solid var(--grey-300);
+    border-radius: 8px;
     background: #fff;
-    color: #111;
+    color: var(--navy);
     text-align: center;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     -webkit-appearance: none;
     appearance: none;
+    font-family: inherit;
   }
+  .field::placeholder { color: var(--grey-500); }
   .field:focus {
     outline: none;
-    border-color: #2196F3;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(45, 176, 168, 0.15);
   }
 
+  /* Option buttons */
   .options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 14px;
     max-width: 720px;
     margin: 0 auto;
   }
-  .options.single { grid-template-columns: 1fr; max-width: 480px; }
   .options.three { grid-template-columns: repeat(3, 1fr); max-width: 720px; }
   .options.five { grid-template-columns: repeat(5, 1fr); max-width: 720px; }
 
   .option-btn {
     width: 100%;
     padding: 22px 16px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    color: #fff;
-    background: #2196F3;
-    border: 2px solid #2196F3;
-    border-radius: 6px;
+    color: var(--navy);
+    background: var(--grey-100);
+    border: 1.5px solid transparent;
+    border-radius: 8px;
     cursor: pointer;
     text-align: center;
-    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
     -webkit-tap-highlight-color: transparent;
     line-height: 1.2;
+    font-family: inherit;
+    letter-spacing: 0.2px;
   }
-  .option-btn:hover { background: #1E88E5; border-color: #1E88E5; }
+  .option-btn:hover {
+    background: var(--grey-200);
+    border-color: var(--grey-300);
+  }
   .option-btn:active { transform: scale(0.98); }
   .option-btn.selected {
-    background: #1565C0;
-    border-color: #1565C0;
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.25);
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    box-shadow: 0 6px 16px -6px rgba(21, 37, 74, 0.4);
   }
 
+  /* Action buttons */
   .actions {
     display: flex;
     gap: 12px;
@@ -181,29 +232,66 @@
     padding: 14px 32px;
     font-size: 16px;
     font-weight: 700;
-    border-radius: 6px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
     transition: background 0.15s, transform 0.1s, opacity 0.2s;
     -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
   }
   .btn:active { transform: scale(0.98); }
   .btn-primary {
-    background: #2196F3;
+    background: var(--teal);
     color: white;
     min-width: 200px;
   }
-  .btn-primary:hover { background: #1E88E5; }
+  .btn-primary:hover { background: var(--teal-dark); }
   .btn-primary:disabled {
-    background: #BDBDBD;
+    background: var(--grey-300);
+    color: #fff;
     cursor: not-allowed;
   }
   .btn-ghost {
     background: transparent;
-    color: #666;
-    border: 2px solid #ddd;
+    color: var(--grey-700);
+    border: 1.5px solid var(--grey-300);
   }
-  .btn-ghost:hover { border-color: #999; color: #333; }
+  .btn-ghost:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ---------- Call expert widget ---------- */
+  .call-expert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 56px auto 0;
+    padding: 0 16px;
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .call-expert .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b9e6e3 0%, #e0f2f1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal-dark);
+    flex-shrink: 0;
+  }
+  .call-expert .avatar svg { width: 28px; height: 28px; }
+  .call-expert .label { color: var(--navy); }
+  .call-expert .phone-link {
+    color: var(--teal);
+    font-weight: 700;
+    text-decoration: underline;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .call-expert .phone-link svg { width: 16px; height: 16px; }
 
   /* ---------- Loading ---------- */
   .loading {
@@ -218,14 +306,14 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    border: 6px solid #E3F2FD;
-    border-top-color: #2196F3;
+    border: 6px solid #e6f5f4;
+    border-top-color: var(--teal);
     animation: spin 0.9s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-msg {
     font-size: 18px;
-    color: #444;
+    color: var(--navy);
     font-weight: 600;
     text-align: center;
     min-height: 24px;
@@ -245,59 +333,62 @@
   }
   .result-emoji {
     font-size: 56px;
-    margin-bottom: 8px;
-    animation: bounce 1.4s ease-in-out infinite;
+    margin-bottom: 6px;
     display: inline-block;
+    animation: bounce 1.4s ease-in-out infinite;
   }
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
   }
   .result h1 {
-    font-size: 32px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 38px;
     font-weight: 800;
-    color: #111;
+    color: var(--navy);
     margin: 0 0 8px;
   }
   .result-sub {
-    color: #555;
-    font-size: 17px;
-    margin: 0 0 24px;
+    color: var(--grey-700);
+    font-size: 16px;
+    margin: 0 0 22px;
   }
   .price-card {
-    background: #2196F3;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
     color: white;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 28px 20px;
-    margin: 0 auto 24px;
-    box-shadow: 0 8px 24px -8px rgba(33, 150, 243, 0.5);
+    margin: 0 auto 22px;
+    box-shadow: 0 12px 32px -10px rgba(21, 37, 74, 0.4);
+    border: 1px solid rgba(45, 176, 168, 0.2);
   }
   .price-label {
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    opacity: 0.9;
+    letter-spacing: 2px;
+    color: var(--teal);
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
   .price-amount {
+    font-family: "Playfair Display", Georgia, serif;
     font-size: 56px;
     font-weight: 800;
     letter-spacing: -1.5px;
     line-height: 1;
   }
   .price-period {
-    font-size: 16px;
-    opacity: 0.95;
-    margin-top: 4px;
+    font-size: 15px;
+    opacity: 0.85;
+    margin-top: 6px;
   }
   .features {
     text-align: left;
-    background: #f8f9fa;
-    border-radius: 8px;
+    background: var(--grey-50);
+    border-radius: 10px;
     padding: 18px 22px;
-    margin-bottom: 24px;
-    border: 1px solid #ececec;
+    margin-bottom: 22px;
+    border: 1px solid var(--grey-200);
   }
   .feature {
     display: flex;
@@ -305,67 +396,34 @@
     gap: 10px;
     padding: 6px 0;
     font-size: 15px;
-    color: #333;
+    color: var(--grey-700);
   }
-  .feature .check { color: #22C55E; font-weight: 800; }
+  .feature .check {
+    color: var(--green);
+    font-weight: 800;
+    font-size: 16px;
+  }
 
   /* ---------- Footer ---------- */
-  .carriers {
-    border-top: 1px solid #ececec;
-    padding: 28px 24px 24px;
-    text-align: center;
-    background: #fff;
-  }
-  .carriers-title {
-    font-weight: 700;
-    font-size: 16px;
-    color: #333;
-    margin: 0 0 18px;
-  }
-  .carrier-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 28px 36px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .carrier {
-    color: #555;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.2px;
-    opacity: 0.85;
-  }
-  .carrier.usaa { color: #003359; font-weight: 800; }
-  .carrier.liberty { color: #0F1F4A; font-style: italic; font-weight: 700; }
-  .carrier.nationwide { color: #00609F; font-weight: 800; }
-  .carrier.lemonade { color: #ED1A6E; font-style: italic; font-family: Georgia, serif; }
-  .carrier.hippo { color: #1FB89F; font-weight: 800; }
-
   .site-footer {
+    border-top: 1px solid var(--grey-200);
     padding: 22px 24px 28px;
     text-align: center;
     background: #fff;
-    border-top: 1px solid #ececec;
+    margin-top: 40px;
   }
   .footer-links {
-    color: #2196F3;
+    color: var(--grey-500);
     font-size: 13px;
-    margin-bottom: 8px;
     line-height: 1.8;
   }
   .footer-links a {
-    color: #2196F3;
+    color: var(--grey-500);
     text-decoration: underline;
     margin: 0 4px;
   }
-  .footer-links .sep { color: #aaa; margin: 0 6px; }
-  .footer-address {
-    color: #666;
-    font-size: 13px;
-  }
+  .footer-links a:hover { color: var(--navy); }
+  .footer-links .sep { margin: 0 4px; }
 
   /* ---------- Confetti ---------- */
   #confetti {
@@ -378,38 +436,45 @@
   .screen { animation: fadeIn 0.35s ease; }
 
   /* ---------- Mobile ---------- */
-  @media (max-width: 640px) {
-    .site-header { padding: 14px 16px; }
-    .logo svg { width: 30px; height: 30px; }
-    .logo-text { font-size: 20px; }
-    .phone { font-size: 15px; }
+  @media (max-width: 768px) {
+    .site-header {
+      grid-template-columns: auto auto;
+      grid-template-areas:
+        "logo phone"
+        "progress progress";
+      padding: 16px 16px 12px;
+      gap: 14px;
+    }
+    .logo { grid-area: logo; }
+    .phone { grid-area: phone; font-size: 14px; }
     .phone svg { width: 18px; height: 18px; }
+    .header-progress { grid-area: progress; padding-top: 14px; }
+    .logo svg { width: 28px; height: 28px; }
+    .logo-text .top { font-size: 18px; }
+    .logo-text .bottom { font-size: 9px; letter-spacing: 3px; }
 
-    .progress-section { padding: 14px 16px 18px; }
-    .progress-title { font-size: 15px; margin-bottom: 10px; }
-    .progress-bar { height: 22px; }
-    .progress-fill { font-size: 11px; min-width: 70px; }
-
-    .main { padding: 28px 16px 40px; }
-    .question-title { font-size: 22px; margin-bottom: 24px; }
+    .main { padding: 22px 16px 32px; }
+    .pretitle { font-size: 14px; }
+    .question-title { font-size: 28px; margin-bottom: 26px; }
 
     .options { grid-template-columns: 1fr; gap: 12px; }
     .options.three, .options.five { grid-template-columns: repeat(3, 1fr); }
-    .option-btn { padding: 18px 12px; font-size: 16px; }
+    .options.five { grid-template-columns: repeat(5, 1fr); }
+    .option-btn { padding: 18px 12px; font-size: 15px; }
     .options.three .option-btn,
-    .options.five .option-btn { padding: 16px 8px; font-size: 16px; }
+    .options.five .option-btn { padding: 16px 8px; font-size: 15px; }
 
     .btn-primary { min-width: 0; flex: 1; }
     .actions { flex-direction: row; }
 
-    .result h1 { font-size: 26px; }
+    .call-expert { margin-top: 40px; flex-wrap: wrap; gap: 10px; font-size: 13px; }
+    .call-expert .avatar { width: 44px; height: 44px; }
+    .call-expert .avatar svg { width: 22px; height: 22px; }
+
+    .result h1 { font-size: 28px; }
     .price-amount { font-size: 44px; }
 
-    .carrier-row { gap: 18px 24px; }
-    .carrier { font-size: 15px; }
-
     .footer-links { font-size: 12px; }
-    .footer-address { font-size: 12px; }
   }
 </style>
 </head>
@@ -419,46 +484,55 @@
     <a href="#" class="logo" aria-label="Home">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 11.5L12 4l9 7.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1v-8.5z"
-              fill="#2196F3" stroke="#1565C0" stroke-width="0.8" stroke-linejoin="round"/>
+              fill="#15254a" stroke="#15254a" stroke-width="0.6" stroke-linejoin="round"/>
       </svg>
-      <span class="logo-text">Home Insurance <span class="accent">Rates</span></span>
+      <span class="logo-text">
+        <span class="top">HOME INSURANCE</span>
+        <span class="bottom">RATES</span>
+      </span>
     </a>
-    <a href="tel:8555783601" class="phone">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 16.92V20a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3.08a2 2 0 012 1.72c.13.96.36 1.91.7 2.81a2 2 0 01-.45 2.11L8.09 10a16 16 0 006 6l1.36-1.35a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7a2 2 0 011.72 2.02z"
-              stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>855-578-3601</span>
-    </a>
-  </header>
 
-  <!-- Progress -->
-  <section class="progress-section">
-    <div class="progress-inner">
-      <h2 class="progress-title">Compare Home Insurance Rates</h2>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width:20%">20% Complete</div>
+    <div class="header-progress">
+      <div class="header-progress-track">
+        <div class="header-progress-fill" id="progressFill" style="width:20%"></div>
+        <div class="header-progress-bubble" id="progressBubble" style="left:20%">20%</div>
       </div>
     </div>
-  </section>
+
+    <a href="tel:8776630285" class="phone">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 16.92V20a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3.08a2 2 0 012 1.72c.13.96.36 1.91.7 2.81a2 2 0 01-.45 2.11L8.09 10a16 16 0 006 6l1.36-1.35a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7a2 2 0 011.72 2.02z"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>(877) 663-0285</span>
+    </a>
+  </header>
 
   <!-- Main -->
   <main class="main">
     <div class="main-inner" id="card">
       <!-- Screens render here -->
     </div>
+
+    <!-- Call expert widget -->
+    <div class="call-expert" id="callExpert">
+      <div class="avatar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 16.92V20a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3.08a2 2 0 012 1.72c.13.96.36 1.91.7 2.81a2 2 0 01-.45 2.11L8.09 10a16 16 0 006 6l1.36-1.35a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7a2 2 0 011.72 2.02z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="label">Call an expert</span>
+      <a href="tel:8776630285" class="phone-link">(877) 663-0285</a>
+    </div>
   </main>
 
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-links">
-      <a href="#">Privacy Policy</a><span class="sep">|</span>
-      <a href="#">Terms of Use</a><span class="sep">|</span>
-      <a href="#">Do not sell my personal information</a><span class="sep">|</span>
-      <a href="#">Contact us</a><span class="sep">|</span>
-      <a href="#">About us</a><span class="sep">|</span>
-      <a href="#">California Privacy Choices</a><span class="sep">|</span>
-      <a href="#">Cookies and Other Technology</a>
+      <a href="#">Do Not Sell</a><span class="sep">&amp;</span>
+      <a href="#">Privacy Policy</a><span class="sep">&amp;</span>
+      <a href="#">Terms &amp; Conditions</a>
     </div>
   </footer>
 
@@ -472,7 +546,8 @@
   const questions = [
     {
       key: 'zip',
-      title: ["Let's get started!", "What's your ZIP code?"],
+      pretitle: "Compare & <strong>Save</strong> on Home Insurance Rates!",
+      title: "What's your ZIP code?",
       type: 'input',
       inputType: 'tel',
       placeholder: '12345',
@@ -481,7 +556,8 @@
     },
     {
       key: 'homeType',
-      title: ["Tell us about it.", "Select Type of Property"],
+      pretitle: "Compare & <strong>Save</strong> on Home Insurance Rates!",
+      title: "Choose Your Home Type",
       type: 'options',
       layout: 'three',
       autoAdvance: true,
@@ -493,7 +569,8 @@
     },
     {
       key: 'yearBuilt',
-      title: ["Almost halfway.", "When was your home built?"],
+      pretitle: "Tell us about your home",
+      title: "When Was Your Home Built?",
       type: 'input',
       inputType: 'tel',
       placeholder: 'e.g. 1998',
@@ -502,7 +579,8 @@
     },
     {
       key: 'sqft',
-      title: ["Just a couple more.", "What is the home's square footage?"],
+      pretitle: "Tell us about your home",
+      title: "What's Your Home's Square Footage?",
       type: 'input',
       inputType: 'tel',
       placeholder: 'e.g. 1800',
@@ -511,7 +589,8 @@
     },
     {
       key: 'bedrooms',
-      title: ["Last one!", "How many bedrooms?"],
+      pretitle: "Last question!",
+      title: "How Many Bedrooms?",
       type: 'options',
       layout: 'five',
       autoAdvance: true,
@@ -527,24 +606,28 @@
 
   const card = document.getElementById('card');
   const progressFill = document.getElementById('progressFill');
+  const progressBubble = document.getElementById('progressBubble');
+  const callExpert = document.getElementById('callExpert');
 
   function setProgress(step) {
-    const pct = Math.round(((step) / TOTAL_QUESTIONS) * 100);
-    const display = step >= TOTAL_QUESTIONS ? 100 : Math.max(pct, 5);
+    const pct = step >= TOTAL_QUESTIONS ? 100 : Math.round(((step) / TOTAL_QUESTIONS) * 100);
+    const display = Math.max(pct, 4);
     progressFill.style.width = display + '%';
-    progressFill.textContent = (step >= TOTAL_QUESTIONS ? 100 : pct) + '% Complete';
+    progressBubble.style.left = display + '%';
+    progressBubble.textContent = pct + '%';
   }
 
   function render() {
     if (state.step >= TOTAL_QUESTIONS) {
       setProgress(TOTAL_QUESTIONS);
+      callExpert.style.display = 'none';
       return renderLoading();
     }
+    callExpert.style.display = '';
     setProgress(state.step);
 
     const q = questions[state.step];
     const answer = state.answers[q.key] || '';
-    const [intro, main] = q.title;
 
     let body = '';
     if (q.type === 'input') {
@@ -560,7 +643,7 @@
           autocomplete="off"
         />`;
     } else {
-      const layoutClass = q.layout || 'single';
+      const layoutClass = q.layout || '';
       body = `<div class="options ${layoutClass}">${q.options.map(o => `
         <button class="option-btn ${answer === o.value ? 'selected' : ''}" data-value="${o.value}">
           ${o.label}
@@ -581,7 +664,8 @@
 
     card.innerHTML = `
       <div class="screen">
-        <h1 class="question-title">${escapeHtml(intro)} <strong>${escapeHtml(main)}</strong></h1>
+        <p class="pretitle">${q.pretitle}</p>
+        <h1 class="question-title">${escapeHtml(q.title)}</h1>
         ${body}
         ${actions}
       </div>`;
@@ -705,7 +789,7 @@
   sizeCanvas();
   window.addEventListener('resize', sizeCanvas);
 
-  const colors = ['#2196F3', '#1E88E5', '#22C55E', '#FFC107', '#1565C0', '#ffffff'];
+  const colors = ['#15254a', '#2db0a8', '#22c55e', '#1f3263', '#5fc7c1', '#ffffff'];
   let particles = [];
   let animating = false;
 
