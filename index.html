@@ -2,276 +2,372 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#1e3a8a" />
-<title>Home Insurance Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#ffffff" />
+<title>MidasRates — Compare Home Insurance Rates</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #60a5fa 100%);
-    background-attachment: fixed;
-    color: #1f2937;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #222;
+    background: #ffffff;
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 24px 16px 32px;
   }
 
-  .card {
-    width: 100%;
-    max-width: 440px;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.25);
-    padding: 28px 24px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .progress-wrap {
+  /* ---------- Header ---------- */
+  .site-header {
+    background: #fff;
+    padding: 18px 24px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .logo svg { width: 36px; height: 36px; flex-shrink: 0; }
+  .logo-text {
+    font-size: 26px;
+    font-weight: 800;
+    color: #111;
+    letter-spacing: -0.3px;
+  }
+  .logo-text .accent { color: #2196F3; }
+
+  .phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #2196F3;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .phone svg { width: 22px; height: 22px; }
+
+  /* ---------- Progress section ---------- */
+  .progress-section {
+    background: #f5f5f5;
+    padding: 18px 24px 22px;
+    border-bottom: 1px solid #ececec;
+  }
+  .progress-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .progress-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 12px;
   }
   .progress-bar {
-    flex: 1;
-    height: 8px;
-    background: #dbeafe;
-    border-radius: 999px;
+    width: 100%;
+    height: 26px;
+    background: #e6e6e6;
+    border-radius: 4px;
     overflow: hidden;
+    position: relative;
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8);
-    border-radius: 999px;
-    width: 0%;
+    background: #22C55E;
+    border-radius: 4px;
     transition: width 0.4s cubic-bezier(.4,0,.2,1);
-  }
-  .progress-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
     font-size: 13px;
-    color: #6b7280;
-    font-weight: 600;
+    font-weight: 700;
+    min-width: 90px;
     white-space: nowrap;
   }
 
-  h1 {
-    font-size: 24px;
-    line-height: 1.25;
-    margin: 0 0 6px;
-    color: #111827;
-    letter-spacing: -0.3px;
+  /* ---------- Main content ---------- */
+  .main {
+    flex: 1;
+    padding: 40px 24px 60px;
   }
-  .subtitle {
-    font-size: 15px;
-    color: #6b7280;
-    margin: 0 0 22px;
-    line-height: 1.4;
+  .main-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .question-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 400;
+    color: #222;
+    line-height: 1.25;
+    margin: 0 0 36px;
+  }
+  .question-title strong {
+    font-weight: 800;
+    color: #111;
   }
 
   .field {
     display: block;
     width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
     padding: 16px 18px;
-    font-size: 17px;
-    border: 2px solid #e5e7eb;
-    border-radius: 14px;
-    background: #fafafa;
-    color: #111827;
-    transition: border-color 0.2s, background 0.2s;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    color: #111;
+    text-align: center;
+    transition: border-color 0.2s;
     -webkit-appearance: none;
     appearance: none;
   }
   .field:focus {
     outline: none;
-    border-color: #2563eb;
-    background: white;
+    border-color: #2196F3;
   }
 
   .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 720px;
+    margin: 0 auto;
   }
+  .options.single { grid-template-columns: 1fr; max-width: 480px; }
+  .options.three { grid-template-columns: repeat(3, 1fr); max-width: 720px; }
+  .options.five { grid-template-columns: repeat(5, 1fr); max-width: 720px; }
+
   .option-btn {
-    display: flex;
-    align-items: center;
-    gap: 14px;
     width: 100%;
-    padding: 16px 18px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #374151;
-    background: #fafafa;
-    border: 2px solid #e5e7eb;
-    border-radius: 14px;
+    padding: 22px 16px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: #2196F3;
+    border: 2px solid #2196F3;
+    border-radius: 6px;
     cursor: pointer;
-    text-align: left;
-    transition: all 0.15s ease;
+    text-align: center;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
     -webkit-tap-highlight-color: transparent;
+    line-height: 1.2;
   }
-  .option-btn:hover { border-color: #93c5fd; background: white; }
+  .option-btn:hover { background: #1E88E5; border-color: #1E88E5; }
   .option-btn:active { transform: scale(0.98); }
   .option-btn.selected {
-    border-color: #2563eb;
-    background: #eff6ff;
-    color: #1e40af;
-  }
-  .option-icon { font-size: 22px; }
-
-  .grid-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .grid-options .option-btn {
-    justify-content: center;
-    text-align: center;
-    padding: 18px 4px;
-    font-size: 18px;
+    background: #1565C0;
+    border-color: #1565C0;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.25);
   }
 
   .actions {
     display: flex;
-    gap: 10px;
-    margin-top: 24px;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
   }
   .btn {
-    flex: 1;
-    padding: 15px 20px;
+    padding: 14px 32px;
     font-size: 16px;
     font-weight: 700;
-    border-radius: 14px;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.2s, opacity 0.2s;
+    transition: background 0.15s, transform 0.1s, opacity 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
-  .btn:active { transform: scale(0.97); }
+  .btn:active { transform: scale(0.98); }
   .btn-primary {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: #2196F3;
     color: white;
-    box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.55);
+    min-width: 200px;
   }
+  .btn-primary:hover { background: #1E88E5; }
   .btn-primary:disabled {
-    opacity: 0.4;
+    background: #BDBDBD;
     cursor: not-allowed;
-    box-shadow: none;
   }
   .btn-ghost {
     background: transparent;
-    color: #6b7280;
-    border: 2px solid #e5e7eb;
-    flex: 0 0 auto;
-    padding: 15px 20px;
+    color: #666;
+    border: 2px solid #ddd;
   }
+  .btn-ghost:hover { border-color: #999; color: #333; }
 
-  /* Loading screen */
+  /* ---------- Loading ---------- */
   .loading {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 22px;
-    padding: 40px 0 30px;
+    gap: 24px;
+    padding: 60px 0 40px;
   }
   .spinner {
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    border: 6px solid #dbeafe;
-    border-top-color: #2563eb;
+    border: 6px solid #E3F2FD;
+    border-top-color: #2196F3;
     animation: spin 0.9s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-msg {
-    font-size: 16px;
-    color: #4b5563;
+    font-size: 18px;
+    color: #444;
     font-weight: 600;
     text-align: center;
-    min-height: 22px;
+    min-height: 24px;
     transition: opacity 0.3s;
   }
 
-  /* Result screen */
+  /* ---------- Result ---------- */
   .result {
     text-align: center;
-    padding: 16px 0 6px;
-    animation: pop 0.5s cubic-bezier(.34,1.56,.64,1);
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
   }
-  @keyframes pop {
-    0% { transform: scale(0.7); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   .result-emoji {
     font-size: 56px;
-    margin-bottom: 6px;
-    display: inline-block;
+    margin-bottom: 8px;
     animation: bounce 1.4s ease-in-out infinite;
+    display: inline-block;
   }
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
   }
   .result h1 {
-    font-size: 26px;
-    margin-bottom: 8px;
+    font-size: 32px;
+    font-weight: 800;
+    color: #111;
+    margin: 0 0 8px;
   }
-  .result .subtitle { margin-bottom: 22px; }
+  .result-sub {
+    color: #555;
+    font-size: 17px;
+    margin: 0 0 24px;
+  }
   .price-card {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: #2196F3;
     color: white;
-    border-radius: 18px;
-    padding: 24px 20px;
-    margin-bottom: 22px;
-    box-shadow: 0 12px 30px -8px rgba(37, 99, 235, 0.5);
+    border-radius: 10px;
+    padding: 28px 20px;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 24px -8px rgba(33, 150, 243, 0.5);
   }
   .price-label {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    opacity: 0.85;
-    margin-bottom: 4px;
+    opacity: 0.9;
     font-weight: 600;
+    margin-bottom: 4px;
   }
   .price-amount {
-    font-size: 48px;
+    font-size: 56px;
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
     line-height: 1;
   }
   .price-period {
     font-size: 16px;
-    opacity: 0.9;
+    opacity: 0.95;
     margin-top: 4px;
   }
   .features {
     text-align: left;
-    margin-bottom: 22px;
-    background: #f9fafb;
-    border-radius: 14px;
-    padding: 16px 18px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    border: 1px solid #ececec;
   }
   .feature {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 6px 0;
-    font-size: 14px;
-    color: #374151;
+    font-size: 15px;
+    color: #333;
   }
-  .feature .check {
-    color: #10b981;
-    font-weight: 800;
+  .feature .check { color: #22C55E; font-weight: 800; }
+
+  /* ---------- Footer ---------- */
+  .carriers {
+    border-top: 1px solid #ececec;
+    padding: 28px 24px 24px;
+    text-align: center;
+    background: #fff;
+  }
+  .carriers-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+    margin: 0 0 18px;
+  }
+  .carrier-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 28px 36px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .carrier {
+    color: #555;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+    opacity: 0.85;
+  }
+  .carrier.usaa { color: #003359; font-weight: 800; }
+  .carrier.liberty { color: #0F1F4A; font-style: italic; font-weight: 700; }
+  .carrier.nationwide { color: #00609F; font-weight: 800; }
+  .carrier.lemonade { color: #ED1A6E; font-style: italic; font-family: Georgia, serif; }
+  .carrier.hippo { color: #1FB89F; font-weight: 800; }
+
+  .site-footer {
+    padding: 22px 24px 28px;
+    text-align: center;
+    background: #fff;
+    border-top: 1px solid #ececec;
+  }
+  .footer-links {
+    color: #2196F3;
+    font-size: 13px;
+    margin-bottom: 8px;
+    line-height: 1.8;
+  }
+  .footer-links a {
+    color: #2196F3;
+    text-decoration: underline;
+    margin: 0 4px;
+  }
+  .footer-links .sep { color: #aaa; margin: 0 6px; }
+  .footer-address {
+    color: #666;
+    font-size: 13px;
   }
 
-  /* Confetti canvas */
+  /* ---------- Confetti ---------- */
   #confetti {
     position: fixed;
     inset: 0;
@@ -279,28 +375,105 @@
     z-index: 50;
   }
 
-  /* Screen transitions */
   .screen { animation: fadeIn 0.35s ease; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 
-  .footer-note {
-    margin-top: 18px;
-    text-align: center;
-    color: rgba(255,255,255,0.85);
-    font-size: 12px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  /* ---------- Mobile ---------- */
+  @media (max-width: 640px) {
+    .site-header { padding: 14px 16px; }
+    .logo svg { width: 30px; height: 30px; }
+    .logo-text { font-size: 20px; }
+    .phone { font-size: 15px; }
+    .phone svg { width: 18px; height: 18px; }
+
+    .progress-section { padding: 14px 16px 18px; }
+    .progress-title { font-size: 15px; margin-bottom: 10px; }
+    .progress-bar { height: 22px; }
+    .progress-fill { font-size: 11px; min-width: 70px; }
+
+    .main { padding: 28px 16px 40px; }
+    .question-title { font-size: 22px; margin-bottom: 24px; }
+
+    .options { grid-template-columns: 1fr; gap: 12px; }
+    .options.three, .options.five { grid-template-columns: repeat(3, 1fr); }
+    .option-btn { padding: 18px 12px; font-size: 16px; }
+    .options.three .option-btn,
+    .options.five .option-btn { padding: 16px 8px; font-size: 16px; }
+
+    .btn-primary { min-width: 0; flex: 1; }
+    .actions { flex-direction: row; }
+
+    .result h1 { font-size: 26px; }
+    .price-amount { font-size: 44px; }
+
+    .carrier-row { gap: 18px 24px; }
+    .carrier { font-size: 15px; }
+
+    .footer-links { font-size: 12px; }
+    .footer-address { font-size: 12px; }
   }
 </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <!-- Screens get rendered here -->
-  </div>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="#" class="logo" aria-label="MidasRates home">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L14.39 8.36L21 9.27L16 14.14L17.45 21L12 17.77L6.55 21L8 14.14L3 9.27L9.61 8.36L12 2Z"
+              fill="#2196F3" stroke="#1565C0" stroke-width="0.8" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text">Midas<span class="accent">Rates</span></span>
+    </a>
+    <a href="tel:8555783601" class="phone">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 16.92V20a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3.08a2 2 0 012 1.72c.13.96.36 1.91.7 2.81a2 2 0 01-.45 2.11L8.09 10a16 16 0 006 6l1.36-1.35a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7a2 2 0 011.72 2.02z"
+              stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>855-578-3601</span>
+    </a>
+  </header>
 
-  <div class="footer-note">Get an instant pre-approval in under 60 seconds</div>
+  <!-- Progress -->
+  <section class="progress-section">
+    <div class="progress-inner">
+      <h2 class="progress-title">Compare Home Insurance Rates</h2>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:20%">20% Complete</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="main-inner" id="card">
+      <!-- Screens render here -->
+    </div>
+  </main>
+
+  <!-- Carriers -->
+  <section class="carriers">
+    <h3 class="carriers-title">Insurance Carriers include</h3>
+    <div class="carrier-row">
+      <span class="carrier usaa">USAA</span>
+      <span class="carrier liberty">Liberty Mutual</span>
+      <span class="carrier nationwide">Nationwide</span>
+      <span class="carrier lemonade">Lemonade</span>
+      <span class="carrier hippo">Hippo</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a><span class="sep">|</span>
+      <a href="#">Terms of Use</a><span class="sep">|</span>
+      <a href="#">Do not sell my personal information</a><span class="sep">|</span>
+      <a href="#">Contact us</a><span class="sep">|</span>
+      <a href="#">About us</a><span class="sep">|</span>
+      <a href="#">California Privacy Choices</a><span class="sep">|</span>
+      <a href="#">Cookies and Other Technology</a>
+    </div>
+    <div class="footer-address">2045 W Grand Ave, Ste B Chicago, IL 60612</div>
+  </footer>
 
   <canvas id="confetti"></canvas>
 
@@ -312,8 +485,7 @@
   const questions = [
     {
       key: 'zip',
-      title: "What's your ZIP code?",
-      subtitle: "We'll use this to check rates in your area.",
+      title: ["Let's get started!", "What's your ZIP code?"],
       type: 'input',
       inputType: 'tel',
       placeholder: '12345',
@@ -322,19 +494,19 @@
     },
     {
       key: 'homeType',
-      title: 'What type of home is it?',
-      subtitle: 'Choose the option that fits best.',
+      title: ["Tell us about it.", "Select Type of Property"],
       type: 'options',
+      layout: 'three',
+      autoAdvance: true,
       options: [
-        { value: 'house', label: 'House', icon: '🏠' },
-        { value: 'condo', label: 'Condo', icon: '🏢' },
-        { value: 'apartment', label: 'Apartment', icon: '🏬' },
+        { value: 'house', label: 'House' },
+        { value: 'condo', label: 'Condo' },
+        { value: 'apartment', label: 'Apartment' },
       ],
     },
     {
       key: 'yearBuilt',
-      title: 'When was your home built?',
-      subtitle: 'A rough year is fine.',
+      title: ["Almost halfway.", "When was your home built?"],
       type: 'input',
       inputType: 'tel',
       placeholder: 'e.g. 1998',
@@ -343,8 +515,7 @@
     },
     {
       key: 'sqft',
-      title: 'How big is your home?',
-      subtitle: 'Square footage — your best estimate works.',
+      title: ["Just a couple more.", "What is the home's square footage?"],
       type: 'input',
       inputType: 'tel',
       placeholder: 'e.g. 1800',
@@ -353,9 +524,10 @@
     },
     {
       key: 'bedrooms',
-      title: 'How many bedrooms?',
-      subtitle: 'Tap a number below.',
-      type: 'grid',
+      title: ["Last one!", "How many bedrooms?"],
+      type: 'options',
+      layout: 'five',
+      autoAdvance: true,
       options: [
         { value: '1', label: '1' },
         { value: '2', label: '2' },
@@ -367,12 +539,25 @@
   ];
 
   const card = document.getElementById('card');
+  const progressFill = document.getElementById('progressFill');
+
+  function setProgress(step) {
+    const pct = Math.round(((step) / TOTAL_QUESTIONS) * 100);
+    const display = step >= TOTAL_QUESTIONS ? 100 : Math.max(pct, 5);
+    progressFill.style.width = display + '%';
+    progressFill.textContent = (step >= TOTAL_QUESTIONS ? 100 : pct) + '% Complete';
+  }
 
   function render() {
-    if (state.step >= TOTAL_QUESTIONS) return renderLoading();
+    if (state.step >= TOTAL_QUESTIONS) {
+      setProgress(TOTAL_QUESTIONS);
+      return renderLoading();
+    }
+    setProgress(state.step);
+
     const q = questions[state.step];
-    const progress = Math.round(((state.step) / TOTAL_QUESTIONS) * 100);
     const answer = state.answers[q.key] || '';
+    const [intro, main] = q.title;
 
     let body = '';
     if (q.type === 'input') {
@@ -387,34 +572,31 @@
           value="${escapeHtml(answer)}"
           autocomplete="off"
         />`;
-    } else if (q.type === 'options') {
-      body = `<div class="options">${q.options.map(o => `
-        <button class="option-btn ${answer === o.value ? 'selected' : ''}" data-value="${o.value}">
-          <span class="option-icon">${o.icon}</span>
-          <span>${o.label}</span>
-        </button>`).join('')}</div>`;
-    } else if (q.type === 'grid') {
-      body = `<div class="grid-options">${q.options.map(o => `
+    } else {
+      const layoutClass = q.layout || 'single';
+      body = `<div class="options ${layoutClass}">${q.options.map(o => `
         <button class="option-btn ${answer === o.value ? 'selected' : ''}" data-value="${o.value}">
           ${o.label}
         </button>`).join('')}</div>`;
     }
 
+    const showActions = q.type === 'input' || !q.autoAdvance;
+    const actions = showActions ? `
+      <div class="actions">
+        ${state.step > 0 ? `<button class="btn btn-ghost" id="back">Back</button>` : ''}
+        <button class="btn btn-primary" id="next" ${canAdvance(q, answer) ? '' : 'disabled'}>
+          ${state.step === TOTAL_QUESTIONS - 1 ? 'See My Rate' : 'Continue'}
+        </button>
+      </div>` : (state.step > 0 ? `
+      <div class="actions">
+        <button class="btn btn-ghost" id="back">Back</button>
+      </div>` : '');
+
     card.innerHTML = `
       <div class="screen">
-        <div class="progress-wrap">
-          <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-          <div class="progress-label">${state.step + 1} / ${TOTAL_QUESTIONS}</div>
-        </div>
-        <h1>${q.title}</h1>
-        <p class="subtitle">${q.subtitle}</p>
+        <h1 class="question-title">${escapeHtml(intro)} <strong>${escapeHtml(main)}</strong></h1>
         ${body}
-        <div class="actions">
-          ${state.step > 0 ? `<button class="btn btn-ghost" id="back">Back</button>` : ''}
-          <button class="btn btn-primary" id="next" ${canAdvance(q, answer) ? '' : 'disabled'}>
-            ${state.step === TOTAL_QUESTIONS - 1 ? 'See My Rate' : 'Continue'}
-          </button>
-        </div>
+        ${actions}
       </div>`;
 
     bindEvents(q);
@@ -435,12 +617,11 @@
       const input = document.getElementById('answer');
       input.addEventListener('input', e => {
         state.answers[q.key] = e.target.value;
-        nextBtn.disabled = !canAdvance(q, e.target.value);
+        if (nextBtn) nextBtn.disabled = !canAdvance(q, e.target.value);
       });
       input.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && !nextBtn.disabled) advance();
+        if (e.key === 'Enter' && nextBtn && !nextBtn.disabled) advance();
       });
-      // Auto-focus on desktop only — avoid jumping keyboard on mobile
       if (window.matchMedia('(hover: hover)').matches) input.focus();
     } else {
       card.querySelectorAll('.option-btn').forEach(btn => {
@@ -448,14 +629,13 @@
           state.answers[q.key] = btn.dataset.value;
           card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
           btn.classList.add('selected');
-          nextBtn.disabled = false;
-          // Auto-advance shortly after tap for option/grid types
-          setTimeout(advance, 220);
+          if (nextBtn) nextBtn.disabled = false;
+          if (q.autoAdvance) setTimeout(advance, 250);
         };
       });
     }
 
-    nextBtn.onclick = advance;
+    if (nextBtn) nextBtn.onclick = advance;
   }
 
   function advance() {
@@ -469,7 +649,7 @@
   function renderLoading() {
     const messages = [
       'Checking your area...',
-      'Comparing rates...',
+      'Comparing rates from top carriers...',
       'Almost done...',
     ];
     card.innerHTML = `
@@ -500,7 +680,7 @@
       <div class="screen result">
         <div class="result-emoji">🎉</div>
         <h1>You're pre-approved!</h1>
-        <p class="subtitle">Based on your answers, here's your estimated rate:</p>
+        <p class="result-sub">Based on your answers, here's your estimated rate:</p>
         <div class="price-card">
           <div class="price-label">Annual Premium</div>
           <div class="price-amount">$781.99</div>
@@ -517,10 +697,7 @@
         </div>
       </div>`;
 
-    document.getElementById('continueBtn').onclick = () => {
-      fireConfetti();
-    };
-
+    document.getElementById('continueBtn').onclick = fireConfetti;
     fireConfetti();
   }
 
@@ -528,7 +705,7 @@
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  // Lightweight confetti
+  // Confetti
   const canvas = document.getElementById('confetti');
   const ctx = canvas.getContext('2d');
   function sizeCanvas() {
@@ -541,7 +718,7 @@
   sizeCanvas();
   window.addEventListener('resize', sizeCanvas);
 
-  const colors = ['#1e3a8a', '#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#ffffff'];
+  const colors = ['#2196F3', '#1E88E5', '#22C55E', '#FFC107', '#1565C0', '#ffffff'];
   let particles = [];
   let animating = false;
 
