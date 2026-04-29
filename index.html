@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#7c5cff" />
+<title>Home Insurance Quiz</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: linear-gradient(135deg, #a78bfa 0%, #f0abfc 50%, #fda4af 100%);
+    background-attachment: fixed;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 32px;
+  }
+
+  .brand {
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .brand .logo {
+    width: 28px; height: 28px;
+    background: white;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px -10px rgba(80, 30, 120, 0.35);
+    padding: 28px 24px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #ede9fe;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c5cff, #ec4899);
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-label {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 1.25;
+    margin: 0 0 6px;
+    color: #111827;
+    letter-spacing: -0.3px;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: #6b7280;
+    margin: 0 0 22px;
+    line-height: 1.4;
+  }
+
+  .field {
+    display: block;
+    width: 100%;
+    padding: 16px 18px;
+    font-size: 17px;
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    background: #fafafa;
+    color: #111827;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field:focus {
+    outline: none;
+    border-color: #7c5cff;
+    background: white;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    background: #fafafa;
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .option-btn:hover { border-color: #c4b5fd; background: white; }
+  .option-btn:active { transform: scale(0.98); }
+  .option-btn.selected {
+    border-color: #7c5cff;
+    background: #f5f3ff;
+    color: #5b21b6;
+  }
+  .option-icon { font-size: 22px; }
+
+  .grid-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .grid-options .option-btn {
+    justify-content: center;
+    text-align: center;
+    padding: 18px 4px;
+    font-size: 18px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .btn {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s, opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c5cff 0%, #ec4899 100%);
+    color: white;
+    box-shadow: 0 8px 20px -6px rgba(124, 92, 255, 0.55);
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+    flex: 0 0 auto;
+    padding: 15px 20px;
+  }
+
+  /* Loading screen */
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 40px 0 30px;
+  }
+  .spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 6px solid #ede9fe;
+    border-top-color: #7c5cff;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-msg {
+    font-size: 16px;
+    color: #4b5563;
+    font-weight: 600;
+    text-align: center;
+    min-height: 22px;
+    transition: opacity 0.3s;
+  }
+
+  /* Result screen */
+  .result {
+    text-align: center;
+    padding: 16px 0 6px;
+    animation: pop 0.5s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes pop {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .result-emoji {
+    font-size: 56px;
+    margin-bottom: 6px;
+    display: inline-block;
+    animation: bounce 1.4s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .result h1 {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+  .result .subtitle { margin-bottom: 22px; }
+  .price-card {
+    background: linear-gradient(135deg, #7c5cff 0%, #ec4899 100%);
+    color: white;
+    border-radius: 18px;
+    padding: 24px 20px;
+    margin-bottom: 22px;
+    box-shadow: 0 12px 30px -8px rgba(124, 92, 255, 0.5);
+  }
+  .price-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .price-amount {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .price-period {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+  .features {
+    text-align: left;
+    margin-bottom: 22px;
+    background: #f9fafb;
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 14px;
+    color: #374151;
+  }
+  .feature .check {
+    color: #10b981;
+    font-weight: 800;
+  }
+
+  /* Confetti canvas */
+  #confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  /* Screen transitions */
+  .screen { animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .footer-note {
+    margin-top: 18px;
+    text-align: center;
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+</style>
+</head>
+<body>
+  <div class="brand">
+    <span class="logo">🏡</span>
+    <span>HomeShield Insurance</span>
+  </div>
+
+  <div class="card" id="card">
+    <!-- Screens get rendered here -->
+  </div>
+
+  <div class="footer-note">Get an instant pre-approval in under 60 seconds</div>
+
+  <canvas id="confetti"></canvas>
+
+<script>
+(() => {
+  const TOTAL_QUESTIONS = 5;
+  const state = { step: 0, answers: {} };
+
+  const questions = [
+    {
+      key: 'zip',
+      title: "What's your ZIP code?",
+      subtitle: "We'll use this to check rates in your area.",
+      type: 'input',
+      inputType: 'tel',
+      placeholder: '12345',
+      maxLength: 5,
+      validate: v => /^\d{5}$/.test(v),
+    },
+    {
+      key: 'homeType',
+      title: 'What type of home is it?',
+      subtitle: 'Choose the option that fits best.',
+      type: 'options',
+      options: [
+        { value: 'house', label: 'House', icon: '🏠' },
+        { value: 'condo', label: 'Condo', icon: '🏢' },
+        { value: 'apartment', label: 'Apartment', icon: '🏬' },
+      ],
+    },
+    {
+      key: 'yearBuilt',
+      title: 'When was your home built?',
+      subtitle: 'A rough year is fine.',
+      type: 'input',
+      inputType: 'tel',
+      placeholder: 'e.g. 1998',
+      maxLength: 4,
+      validate: v => /^\d{4}$/.test(v) && +v >= 1800 && +v <= new Date().getFullYear(),
+    },
+    {
+      key: 'sqft',
+      title: 'How big is your home?',
+      subtitle: 'Square footage — your best estimate works.',
+      type: 'input',
+      inputType: 'tel',
+      placeholder: 'e.g. 1800',
+      maxLength: 6,
+      validate: v => /^\d{2,6}$/.test(v) && +v >= 100,
+    },
+    {
+      key: 'bedrooms',
+      title: 'How many bedrooms?',
+      subtitle: 'Tap a number below.',
+      type: 'grid',
+      options: [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5+', label: '5+' },
+      ],
+    },
+  ];
+
+  const card = document.getElementById('card');
+
+  function render() {
+    if (state.step >= TOTAL_QUESTIONS) return renderLoading();
+    const q = questions[state.step];
+    const progress = Math.round(((state.step) / TOTAL_QUESTIONS) * 100);
+    const answer = state.answers[q.key] || '';
+
+    let body = '';
+    if (q.type === 'input') {
+      body = `
+        <input
+          class="field"
+          id="answer"
+          type="${q.inputType || 'text'}"
+          inputmode="${q.inputType === 'tel' ? 'numeric' : 'text'}"
+          placeholder="${q.placeholder || ''}"
+          maxlength="${q.maxLength || 50}"
+          value="${escapeHtml(answer)}"
+          autocomplete="off"
+        />`;
+    } else if (q.type === 'options') {
+      body = `<div class="options">${q.options.map(o => `
+        <button class="option-btn ${answer === o.value ? 'selected' : ''}" data-value="${o.value}">
+          <span class="option-icon">${o.icon}</span>
+          <span>${o.label}</span>
+        </button>`).join('')}</div>`;
+    } else if (q.type === 'grid') {
+      body = `<div class="grid-options">${q.options.map(o => `
+        <button class="option-btn ${answer === o.value ? 'selected' : ''}" data-value="${o.value}">
+          ${o.label}
+        </button>`).join('')}</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="screen">
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+          <div class="progress-label">${state.step + 1} / ${TOTAL_QUESTIONS}</div>
+        </div>
+        <h1>${q.title}</h1>
+        <p class="subtitle">${q.subtitle}</p>
+        ${body}
+        <div class="actions">
+          ${state.step > 0 ? `<button class="btn btn-ghost" id="back">Back</button>` : ''}
+          <button class="btn btn-primary" id="next" ${canAdvance(q, answer) ? '' : 'disabled'}>
+            ${state.step === TOTAL_QUESTIONS - 1 ? 'See My Rate' : 'Continue'}
+          </button>
+        </div>
+      </div>`;
+
+    bindEvents(q);
+  }
+
+  function canAdvance(q, value) {
+    if (!value) return false;
+    if (q.validate) return q.validate(value);
+    return true;
+  }
+
+  function bindEvents(q) {
+    const nextBtn = document.getElementById('next');
+    const backBtn = document.getElementById('back');
+    if (backBtn) backBtn.onclick = () => { state.step--; render(); };
+
+    if (q.type === 'input') {
+      const input = document.getElementById('answer');
+      input.addEventListener('input', e => {
+        state.answers[q.key] = e.target.value;
+        nextBtn.disabled = !canAdvance(q, e.target.value);
+      });
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !nextBtn.disabled) advance();
+      });
+      // Auto-focus on desktop only — avoid jumping keyboard on mobile
+      if (window.matchMedia('(hover: hover)').matches) input.focus();
+    } else {
+      card.querySelectorAll('.option-btn').forEach(btn => {
+        btn.onclick = () => {
+          state.answers[q.key] = btn.dataset.value;
+          card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          nextBtn.disabled = false;
+          // Auto-advance shortly after tap for option/grid types
+          setTimeout(advance, 220);
+        };
+      });
+    }
+
+    nextBtn.onclick = advance;
+  }
+
+  function advance() {
+    const q = questions[state.step];
+    const v = state.answers[q.key];
+    if (!canAdvance(q, v)) return;
+    state.step++;
+    render();
+  }
+
+  function renderLoading() {
+    const messages = [
+      'Checking your area...',
+      'Comparing rates...',
+      'Almost done...',
+    ];
+    card.innerHTML = `
+      <div class="screen loading">
+        <div class="spinner"></div>
+        <div class="loading-msg" id="loadingMsg">${messages[0]}</div>
+      </div>`;
+    const el = document.getElementById('loadingMsg');
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      if (i >= messages.length) return;
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.textContent = messages[i];
+        el.style.opacity = '1';
+      }, 250);
+    }, 850);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      renderResult();
+    }, 2600);
+  }
+
+  function renderResult() {
+    card.innerHTML = `
+      <div class="screen result">
+        <div class="result-emoji">🎉</div>
+        <h1>You're pre-approved!</h1>
+        <p class="subtitle">Based on your answers, here's your estimated rate:</p>
+        <div class="price-card">
+          <div class="price-label">Annual Premium</div>
+          <div class="price-amount">$781.99</div>
+          <div class="price-period">per year</div>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="check">✓</span> Dwelling coverage up to $300,000</div>
+          <div class="feature"><span class="check">✓</span> Personal property protection</div>
+          <div class="feature"><span class="check">✓</span> Liability coverage included</div>
+          <div class="feature"><span class="check">✓</span> 24/7 claims support</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="continueBtn">Continue</button>
+        </div>
+      </div>`;
+
+    document.getElementById('continueBtn').onclick = () => {
+      fireConfetti();
+    };
+
+    fireConfetti();
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // Lightweight confetti
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  function sizeCanvas() {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  sizeCanvas();
+  window.addEventListener('resize', sizeCanvas);
+
+  const colors = ['#7c5cff', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#f0abfc'];
+  let particles = [];
+  let animating = false;
+
+  function fireConfetti() {
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const count = 140;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: W / 2 + (Math.random() - 0.5) * 60,
+        y: H / 3,
+        vx: (Math.random() - 0.5) * 14,
+        vy: (Math.random() * -12) - 4,
+        g: 0.32 + Math.random() * 0.15,
+        size: 6 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 0.3,
+        life: 0,
+        maxLife: 120 + Math.random() * 60,
+      });
+    }
+    if (!animating) {
+      animating = true;
+      requestAnimationFrame(tick);
+    }
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = particles.filter(p => {
+      p.vy += p.g;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.life++;
+      const alpha = Math.max(0, 1 - p.life / p.maxLife);
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      ctx.restore();
+      return p.life < p.maxLife && p.y < window.innerHeight + 40;
+    });
+    if (particles.length > 0) {
+      requestAnimationFrame(tick);
+    } else {
+      animating = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
